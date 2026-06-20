@@ -20,13 +20,13 @@ python app.py --batch-root qrcodes/detection --category glare --save-json
 汇总结果对比：
 
 ```bash
-python compare_summaries.py record/runtime_outputs/summary_by_category.csv another_run/summary_by_category.csv --name glare_compare
+python compare_summaries.py outputs/runtime_outputs/summary_by_category.csv another_run/summary_by_category.csv --name glare_compare
 ```
 
 多次实验总览：
 
 ```bash
-python build_comparison_index.py --comparisons-root record/comparisons --output-dir record
+python build_comparison_index.py --comparisons-root outputs/comparisons --output-dir outputs
 ```
 
 本地网页演示：
@@ -129,9 +129,9 @@ python app.py qrcodes/demo --save-json
 如果要跑完整验收链路，推荐命令如下：
 
 ```bash
-D:\programme\anaconda\python.exe app.py --batch-root qrcodes/detection -o record/runtime_outputs/baseline_full --save-json --summarize
-D:\programme\anaconda\python.exe compare_summaries.py record/runtime_outputs/baseline_full/summary_by_category.csv record/runtime_outputs/candidate_no_pyzbar/summary_by_category.csv -o record/comparisons --name baseline_vs_no_pyzbar
-D:\programme\anaconda\python.exe build_comparison_index.py --comparisons-root record/comparisons --output-dir record
+D:\programme\anaconda\python.exe app.py --batch-root qrcodes/detection -o outputs/runtime_outputs/baseline_full --save-json --summarize
+D:\programme\anaconda\python.exe compare_summaries.py outputs/runtime_outputs/baseline_full/summary_by_category.csv outputs/runtime_outputs/candidate_no_pyzbar/summary_by_category.csv -o outputs/comparisons --name baseline_vs_no_pyzbar
+D:\programme\anaconda\python.exe build_comparison_index.py --comparisons-root outputs/comparisons --output-dir outputs
 ```
 
 如果要使用完整分类数据集而不是轻量 demo，则继续使用：
@@ -150,45 +150,45 @@ python app.py qrcodes/detection --no-pyzbar
 
 当前仓库默认会在你本地生成运行结果；完整数据资源结构说明见 [qrcodes/DATASET_README.md](/D:/github/picture_detection/qrcodes/DATASET_README.md:1)。
 
-- `record/runtime_outputs/images/*_detected.png`
+- `outputs/runtime_outputs/images/*_detected.png`
   - 标注后的检测结果图
-- `record/runtime_outputs/results.csv`
+- `outputs/runtime_outputs/results.csv`
   - 检测结果汇总
-- `record/runtime_outputs/results.json`
+- `outputs/runtime_outputs/results.json`
   - 使用 `--save-json` 时生成
-- `record/runtime_outputs/summary_by_image.csv`
+- `outputs/runtime_outputs/summary_by_image.csv`
   - 按图片汇总检测结果
-- `record/runtime_outputs/summary_by_category.csv`
+- `outputs/runtime_outputs/summary_by_category.csv`
   - 按类别汇总成功率与耗时
-- `record/runtime_outputs/summary_overall.json`
+- `outputs/runtime_outputs/summary_overall.json`
   - 总体统计指标
-- `record/runtime_outputs/summary_report.md`
+- `outputs/runtime_outputs/summary_report.md`
   - 面向阅读的 Markdown 汇总报告
-- `record/runtime_outputs/run_meta.json`
+- `outputs/runtime_outputs/run_meta.json`
   - 单次运行的时间、命令、输入摘要等元数据
-- `record/runtime_outputs/diagnostics.json`
+- `outputs/runtime_outputs/diagnostics.json`
   - 单次运行的诊断轨迹，供失败原因模型与长期分析使用
-- `record/comparisons/<name>/...`
+- `outputs/comparisons/<name>/...`
   - 长期保存的多次实验对比目录
-- `record/comparisons/<name>/*comparison*.csv / json / md`
+- `outputs/comparisons/<name>/*comparison*.csv / json / md`
   - 不同实验结果之间的分类对比报告
-- `record/comparisons/<name>/*comparison*_report.html`
+- `outputs/comparisons/<name>/*comparison*_report.html`
   - 单文件 HTML 实验报告页，内含总体结论、图表、失败聚类、类别级根因画像卡片，以及 `glare` / `high_version` / `curved` 等类别的定制排查清单
-- `record/comparisons/<name>/*comparison*_success_rate_delta.png`
+- `outputs/comparisons/<name>/*comparison*_success_rate_delta.png`
   - 按类别成功率变化柱状图
-- `record/comparisons/<name>/*comparison*_avg_time_delta.png`
+- `outputs/comparisons/<name>/*comparison*_avg_time_delta.png`
   - 按类别平均耗时变化柱状图
-- `record/comparisons/<name>/*comparison*_input_distribution.png`
+- `outputs/comparisons/<name>/*comparison*_input_distribution.png`
   - 基线与对比运行的输入样本分布图
-- `record/comparisons/<name>/*comparison*_method_hits.png`
+- `outputs/comparisons/<name>/*comparison*_method_hits.png`
   - 基线与对比运行的方法命中分布图
-- `record/comparison_index.html`
+- `outputs/comparison_index.html`
   - 多次实验对比总览页
-- `record/comparison_index.md`
+- `outputs/comparison_index.md`
   - 多次实验对比总览摘要
-- `record/comparison_index.json`
+- `outputs/comparison_index.json`
   - 多次实验总览的结构化索引数据
-- `record/comparisons/<name>/*comparison*_report.html`
+- `outputs/comparisons/<name>/*comparison*_report.html`
   - 报告页中还会包含失败样本聚类、失败原因归类、高风险类别提示、方法/变体命中排行榜、风险趋势摘要
 
 ## 说明

@@ -33,7 +33,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="对比两份 summary_by_category.csv 汇总结果")
     parser.add_argument("baseline", help="基线 summary_by_category.csv")
     parser.add_argument("candidate", help="对比 summary_by_category.csv")
-    parser.add_argument("-o", "--output-dir", default="record", help="输出目录，默认 record")
+    parser.add_argument("-o", "--output-dir", default="outputs/comparisons", help="输出目录，默认 outputs/comparisons")
     parser.add_argument("--name", default="comparison", help="输出文件名前缀")
     return parser.parse_args()
 

@@ -16,7 +16,7 @@ from qr_static_detector.summary_reporting import (
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="汇总 QR 检测 results.csv 结果")
-    parser.add_argument("input", nargs="?", default="record/runtime_outputs/results.csv", help="输入 results.csv 路径")
+    parser.add_argument("input", nargs="?", default="outputs/runtime_outputs/results.csv", help="输入 results.csv 路径")
     parser.add_argument("-o", "--output-dir", help="汇总结果输出目录，默认与输入文件同目录")
     return parser.parse_args()
 

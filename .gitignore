@@ -9,4 +9,5 @@ Thumbs.db
 
 .streamlit/secrets.toml
 
+outputs/
 record/

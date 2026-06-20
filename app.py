@@ -19,7 +19,7 @@ from qr_static_detector.visualize import draw_detections
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="QR码静态图片检测系统")
     parser.add_argument("input", nargs="?", default="qrcodes/detection", help="输入图片或图片目录，默认 qrcodes/detection")
-    parser.add_argument("-o", "--output", default="record/runtime_outputs", help="输出目录，默认 record/runtime_outputs")
+    parser.add_argument("-o", "--output", default="outputs/runtime_outputs", help="输出目录，默认 outputs/runtime_outputs")
     parser.add_argument("--category", choices=CATEGORY_CHOICES, help="按场景类别启用自适应预处理")
     parser.add_argument("--batch-root", help="按类别批量检测数据集根目录，例如 qrcodes/detection")
     parser.add_argument("--no-pyzbar", action="store_true", help="仅使用OpenCV检测，不调用pyzbar")
@@ -254,7 +254,7 @@ def build_command(args: argparse.Namespace) -> str:
         parts.append(str(args.input))
     if args.category:
         parts.extend(["--category", args.category])
-    if args.output != "record/runtime_outputs":
+    if args.output != "outputs/runtime_outputs":
         parts.extend(["-o", str(args.output)])
     if args.no_pyzbar:
         parts.append("--no-pyzbar")

@@ -23,8 +23,8 @@ else:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="构建多次实验对比总览页")
-    parser.add_argument("--comparisons-root", default="record/comparisons", help="对比结果根目录")
-    parser.add_argument("-o", "--output-dir", default="record", help="总览页输出目录")
+    parser.add_argument("--comparisons-root", default="outputs/comparisons", help="对比结果根目录")
+    parser.add_argument("-o", "--output-dir", default="outputs", help="总览页输出目录")
     parser.add_argument("--name", default="comparison_index", help="输出文件名前缀")
     return parser.parse_args()
 
