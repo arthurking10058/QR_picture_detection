@@ -1,0 +1,21 @@
+[project]
+name = "picture-detection"
+version = "0.1.0"
+description = "Unified QR static-image detection workspace merged from FH and RBA."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "opencv-python>=4.13.0.92",
+    "pyzbar>=0.1.9",
+    "streamlit>=1.45.0",
+    "plotly>=6.0.0",
+    "streamlit-webrtc>=0.47.0",
+    "aiortc>=1.9.0",
+    "tornado>=6.5.5",
+    "matplotlib>=3.8.0",
+]
+
+[dependency-groups]
+dev = [
+    "qrcode[pil]",
+]
