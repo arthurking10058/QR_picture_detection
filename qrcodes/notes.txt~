@@ -1,1 +1,0 @@
-mogrify -quality 65 -format jpg *.jpg;ls -lh *

@@ -7,7 +7,7 @@
 命令行检测：
 
 ```bash
-python app.py qrcodes/detection --save-json
+python app.py qrcodes/demo --save-json
 ```
 
 分类数据集批量检测：
@@ -49,11 +49,9 @@ picture_detection/
 ├─ streamlit_app.py             # 整合自 RBA 的增强版 Web UI
 ├─ local_qr_web.py              # 轻量本地网页演示入口
 ├─ qr_static_detector/          # 统一检测核心
-├─ qrcodes/                     # 从 RBA/FH 合并出的历史数据集与样例
+├─ qrcodes/                     # demo 样本、完整分类数据集与历史解码样例
 ├─ CATEGORY_PREPROCESSING.md    # 16 类分类预处理策略说明
 ├─ .streamlit/config.toml       # Streamlit 本地配置
-├─ record/runtime_outputs/      # 默认运行输出目录
-├─ record/                      # 归档脚本、课程资料、整理记录
 ```
 
 ## 整合内容
@@ -64,6 +62,7 @@ picture_detection/
 - `RBA` 的 Streamlit 交互模式，已整理为根目录 [streamlit_app.py](/D:/github/picture_detection/streamlit_app.py:1)
 - `RBA/FH` 的 `qrcodes/` 数据资源，已复制到根目录 [qrcodes](/D:/github/picture_detection/qrcodes)
 - 关键检测参数与类别策略，已集中到 [qr_static_detector/config.py](/D:/github/picture_detection/qr_static_detector/config.py:1)
+- 轻量演示样本见 [qrcodes/demo](/D:/github/picture_detection/qrcodes/demo)
 
 ## 检测能力
 
@@ -118,13 +117,13 @@ pip install -r requirements-full.txt
 推荐优先使用以下两种方式之一：
 
 ```bash
-D:\programme\anaconda\python.exe app.py qrcodes/detection --save-json
+D:\programme\anaconda\python.exe app.py qrcodes/demo --save-json
 ```
 
 或先进入你自己的虚拟环境，再运行：
 
 ```bash
-python app.py qrcodes/detection --save-json
+python app.py qrcodes/demo --save-json
 ```
 
 如果要跑完整验收链路，推荐命令如下：
@@ -135,6 +134,12 @@ D:\programme\anaconda\python.exe compare_summaries.py record/runtime_outputs/bas
 D:\programme\anaconda\python.exe build_comparison_index.py --comparisons-root record/comparisons --output-dir record
 ```
 
+如果要使用完整分类数据集而不是轻量 demo，则继续使用：
+
+```bash
+D:\programme\anaconda\python.exe app.py --batch-root qrcodes/detection --save-json --summarize
+```
+
 如果当前环境没有 `pyzbar` 或底层 `zbar`，可以先退回 OpenCV 检测：
 
 ```bash
@@ -142,6 +147,8 @@ python app.py qrcodes/detection --no-pyzbar
 ```
 
 ## 输出结果
+
+当前仓库默认会在你本地生成运行结果；完整数据资源结构说明见 [qrcodes/DATASET_README.md](/D:/github/picture_detection/qrcodes/DATASET_README.md:1)。
 
 - `record/runtime_outputs/images/*_detected.png`
   - 标注后的检测结果图
