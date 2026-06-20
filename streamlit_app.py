@@ -85,27 +85,27 @@ section[data-testid="stSidebar"] {
     background: rgba(255, 251, 245, 0.86);
     border: 1px solid rgba(23, 49, 44, 0.08);
     border-radius: 28px;
-    padding: 28px 30px;
+    padding: 22px 26px;
     box-shadow: 0 24px 60px rgba(76, 57, 30, 0.10);
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.9rem;
 }
 .hero-copy {
     color: rgba(27, 42, 47, 0.72);
-    line-height: 1.75;
-    font-size: 1rem;
+    line-height: 1.68;
+    font-size: 0.98rem;
     max-width: 880px;
 }
 .hero-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 14px;
-    margin-top: 18px;
+    margin-top: 14px;
 }
 .hero-pill {
     background: rgba(255, 255, 255, 0.78);
     border: 1px solid rgba(23, 49, 44, 0.08);
     border-radius: 18px;
-    padding: 14px 16px;
+    padding: 12px 15px;
 }
 .hero-pill span {
     display: block;
@@ -124,9 +124,9 @@ section[data-testid="stSidebar"] {
     background: rgba(255, 255, 255, 0.62);
     border: 1px dashed rgba(23, 49, 44, 0.18);
     border-radius: 18px;
-    padding: 16px 18px;
+    padding: 14px 16px;
     color: rgba(27, 42, 47, 0.76);
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
 }
 [data-testid="stMetric"] {
     background: rgba(255, 251, 245, 0.78);
@@ -222,8 +222,8 @@ section[data-testid="stSidebar"] {
 [data-testid="stSidebar"] [data-baseweb="select"] div,
 [data-testid="stSidebar"] [data-baseweb="select"] input,
 [data-testid="stSidebar"] [data-baseweb="select"] svg {
-    color: #17312c !important;
-    fill: #17312c !important;
+    color: #000000 !important;
+    fill: #000000 !important;
 }
 div[role="listbox"] {
     background: #fffaf3 !important;
@@ -249,7 +249,8 @@ div[role="option"]:hover {
     color: #fff7ef;
     border: none;
     border-radius: 999px;
-    padding: 0.68rem 1.4rem;
+    padding: 0.78rem 1.5rem;
+    min-height: 48px;
     font-weight: 600;
     box-shadow: 0 10px 24px rgba(23, 49, 44, 0.16);
 }
@@ -260,11 +261,25 @@ div[role="option"]:hover {
     background: rgba(255, 251, 245, 0.88);
     border: 1px dashed rgba(23, 49, 44, 0.18);
     border-radius: 20px;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
 }
 [data-testid="stExpander"] {
     background: rgba(255, 251, 245, 0.7);
     border: 1px solid rgba(23, 49, 44, 0.08);
     border-radius: 18px;
+}
+.batch-result-block {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+[data-testid="stExpander"] details {
+    border-radius: 18px;
+}
+[data-testid="stExpander"] details summary {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
 }
 </style>
 """
@@ -379,9 +394,11 @@ def _render_batch_results(all_results: list[dict]):
         st.plotly_chart(fig_bar, use_container_width=True)
 
     st.markdown('<div class="section-header">逐图结果</div>', unsafe_allow_html=True)
+    st.markdown('<div class="batch-result-block">', unsafe_allow_html=True)
     for result in all_results:
         with st.expander(result["filename"], expanded=False):
             _render_single_result(result)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 def _render_video_result(video_result: dict):

@@ -62,17 +62,20 @@ class QRStaticDetector:
         do_rotate = category in DETECTOR_CONFIG.rotation_categories
         cv2_first = category in DETECTOR_CONFIG.cv2_first_categories
         candidates = preprocess_by_category(image, category)
+        original_height, original_width = image.shape[:2]
 
         def iter_candidate_variants() -> list[ImageVariant]:
             variants: list[ImageVariant] = []
             for index, candidate in enumerate(candidates, start=1):
                 name = f"{category}_{index:02d}"
+                scale_x, scale_y = _derive_variant_scale(candidate, original_width, original_height)
                 if do_rotate:
                     for rotate_name, rotate_code in _rotation_variants():
                         rotated = cv2.rotate(candidate, rotate_code) if rotate_code is not None else candidate
-                        variants.append(ImageVariant(f"{name}_{rotate_name}", rotated))
+                        rotate_scale_x, rotate_scale_y = _derive_variant_scale(rotated, original_width, original_height)
+                        variants.append(ImageVariant(f"{name}_{rotate_name}", rotated, rotate_scale_x, rotate_scale_y))
                 else:
-                    variants.append(ImageVariant(name, candidate))
+                    variants.append(ImageVariant(name, candidate, scale_x, scale_y))
             return variants
 
         candidate_variants = iter_candidate_variants()
@@ -433,6 +436,13 @@ def _normalize_points(
         rectangle = cv2.minAreaRect(hull)
         array = cv2.boxPoints(rectangle)
     return [(int(round(x * scale_x)), int(round(y * scale_y))) for x, y in array[:4]]
+
+
+def _derive_variant_scale(candidate: np.ndarray, original_width: int, original_height: int) -> tuple[float, float]:
+    candidate_height, candidate_width = candidate.shape[:2]
+    if candidate_width <= 0 or candidate_height <= 0:
+        return 1.0, 1.0
+    return original_width / candidate_width, original_height / candidate_height
 
 
 def _point_signature(points: list[tuple[int, int]]) -> tuple[tuple[int, int], ...]:
