@@ -126,11 +126,23 @@ D:\programme\anaconda\python.exe app.py qrcodes/demo --save-json
 python app.py qrcodes/demo --save-json
 ```
 
-如果要跑完整验收链路，推荐命令如下：
+如果你想体验完整的批量处理流程，可以依次执行下面 3 步：
+
+1. 运行批量检测并生成汇总：
 
 ```bash
 D:\programme\anaconda\python.exe app.py --batch-root qrcodes/detection -o outputs/runtime_outputs/baseline_full --save-json --summarize
+```
+
+2. 对两次运行结果做分类对比：
+
+```bash
 D:\programme\anaconda\python.exe compare_summaries.py outputs/runtime_outputs/baseline_full/summary_by_category.csv outputs/runtime_outputs/candidate_no_pyzbar/summary_by_category.csv -o outputs/comparisons --name baseline_vs_no_pyzbar
+```
+
+3. 基于多次对比结果生成总览页：
+
+```bash
 D:\programme\anaconda\python.exe build_comparison_index.py --comparisons-root outputs/comparisons --output-dir outputs
 ```
 
@@ -194,4 +206,4 @@ python app.py qrcodes/detection --no-pyzbar
 ## 说明
 
 - 根目录这套代码已经是整合后的主版本，后续建议继续只维护根目录实现
-- `samples/` 和 `outputs/` 已不再是主线必需目录，可在确认后删除
+- `outputs/` 是本地运行时生成的结果目录，默认已加入 `.gitignore`
