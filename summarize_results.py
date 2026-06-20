@@ -5,6 +5,7 @@ from pathlib import Path
 
 from qr_static_detector.reporting import ensure_output_dir, read_csv_rows, write_csv_rows, write_json_file
 from qr_static_detector.summary_reporting import (
+    build_summary_html_report,
     build_summary_markdown_report,
     build_summary_report_context,
     read_run_meta,
@@ -51,11 +52,16 @@ def main() -> int:
         build_summary_markdown_report(report_context),
         encoding="utf-8",
     )
+    (output_dir / "summary_report.html").write_text(
+        build_summary_html_report(report_context),
+        encoding="utf-8",
+    )
 
     print(f"按图片汇总: {output_dir / 'summary_by_image.csv'}")
     print(f"按类别汇总: {output_dir / 'summary_by_category.csv'}")
     print(f"总体汇总: {output_dir / 'summary_overall.json'}")
     print(f"Markdown报告: {output_dir / 'summary_report.md'}")
+    print(f"HTML报告: {output_dir / 'summary_report.html'}")
     return 0
 
 

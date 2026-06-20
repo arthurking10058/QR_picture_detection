@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from .comparison_analysis import aggregate_method_hits
+from .comparison_metrics import aggregate_method_hits
 from .config import REPORT_CONFIG
 from .reporting_common import safe_float
 

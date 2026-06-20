@@ -47,6 +47,15 @@ from .index_reporting import (
     create_index_line_chart,
     generate_comparison_index_charts,
 )
+from .summary_reporting import (
+    build_summary_html_report,
+    build_summary_markdown_report,
+    build_summary_report_context,
+    read_run_meta,
+    summarize_images_by_category,
+    summarize_overall_results,
+    summarize_result_rows_by_image,
+)
 from .reporting_common import (
     build_report_dir,
     configure_matplotlib_chinese,
@@ -86,6 +95,9 @@ __all__ = [
     "build_sample_ref",
     "build_stable_failure_lines",
     "build_summary_insights",
+    "build_summary_html_report",
+    "build_summary_markdown_report",
+    "build_summary_report_context",
     "build_trend_lines",
     "collect_comparison_index_items",
     "compare_summary_rows",
@@ -109,6 +121,7 @@ __all__ = [
     "read_json_dict",
     "read_optional_csv_rows",
     "read_optional_json_list",
+    "read_run_meta",
     "read_summary_run_meta",
     "render_category_portrait_cards",
     "render_html_failure_clusters",
@@ -118,6 +131,9 @@ __all__ = [
     "render_markdown_risk_categories",
     "safe_float",
     "summarize_comparison_delta",
+    "summarize_images_by_category",
+    "summarize_overall_results",
+    "summarize_result_rows_by_image",
     "top_method_check",
     "top_variant_check",
     "write_csv_rows",

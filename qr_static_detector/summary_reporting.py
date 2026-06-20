@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections import defaultdict
 from pathlib import Path
 
+from .summary_html import build_summary_html_report
 from .report_text import SUMMARY_REPORT_TITLE
 from .reporting_common import read_json_dict, safe_float
 
@@ -123,3 +124,14 @@ def build_summary_markdown_report(context: dict[str, object]) -> str:
         )
     lines.append("")
     return "\n".join(lines)
+
+
+__all__ = [
+    "build_summary_html_report",
+    "build_summary_markdown_report",
+    "build_summary_report_context",
+    "read_run_meta",
+    "summarize_images_by_category",
+    "summarize_overall_results",
+    "summarize_result_rows_by_image",
+]

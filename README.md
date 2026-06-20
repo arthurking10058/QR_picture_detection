@@ -1,6 +1,8 @@
 # QR 静态图检测与多场景鲁棒性验证
 
-这份根目录版本已经把你之前的 `FH` 和 `RBA` 两套代码主干整合成一份统一实现：保留了原来主线的简洁入口，也吸收了分类自适应预处理、复杂场景兜底检测、视频/摄像头 Web 演示等增强能力。
+这是一个面向静态图片场景的 QR 检测项目，重点覆盖常规拍摄、反光、模糊、透视、曲面、高版本码等多种复杂情况。
+
+仓库当前提供统一的命令行入口、轻量网页演示、批量汇总、结果对比和多次实验总览，适合做本地验证、课程展示和多场景鲁棒性分析。
 
 ## 当前推荐入口
 
@@ -41,7 +43,7 @@ python local_qr_web.py
 streamlit run streamlit_app.py
 ```
 
-## 整合后的根目录结构
+## 项目结构
 
 ```text
 picture_detection/
@@ -54,15 +56,20 @@ picture_detection/
 ├─ .streamlit/config.toml       # Streamlit 本地配置
 ```
 
-## 整合内容
+## 核心模块
 
-- `FH` / `RBA` 共有的 16 类分类预处理策略，已并入 [qr_static_detector/adaptive.py](/D:/github/picture_detection/qr_static_detector/adaptive.py:1)
-- `RBA` 更完整的多后端检测、旋转/透视/裁剪兜底逻辑，已并入 [qr_static_detector/detector.py](/D:/github/picture_detection/qr_static_detector/detector.py:1)
-- `RBA` 的帧检测能力，已并入 `QRStaticDetector.detect_frame()`
-- `RBA` 的 Streamlit 交互模式，已整理为根目录 [streamlit_app.py](/D:/github/picture_detection/streamlit_app.py:1)
-- `RBA/FH` 的 `qrcodes/` 数据资源，已复制到根目录 [qrcodes](/D:/github/picture_detection/qrcodes)
-- 关键检测参数与类别策略，已集中到 [qr_static_detector/config.py](/D:/github/picture_detection/qr_static_detector/config.py:1)
-- 轻量演示样本见 [qrcodes/demo](/D:/github/picture_detection/qrcodes/demo)
+- [qr_static_detector/detector.py](/D:/github/picture_detection/qr_static_detector/detector.py:1)
+  - 检测主流程、多后端解码、旋转 / 透视 / 裁剪等兜底逻辑
+- [qr_static_detector/adaptive.py](/D:/github/picture_detection/qr_static_detector/adaptive.py:1)
+  - 按场景类别启用自适应预处理策略
+- [qr_static_detector/config.py](/D:/github/picture_detection/qr_static_detector/config.py:1)
+  - 集中管理检测参数、预处理参数和报告参数
+- [streamlit_app.py](/D:/github/picture_detection/streamlit_app.py:1)
+  - 增强版交互式 Web UI
+- [local_qr_web.py](/D:/github/picture_detection/local_qr_web.py:1)
+  - 轻量本地网页演示入口
+- [qrcodes/demo](/D:/github/picture_detection/qrcodes/demo)
+  - 轻量演示样本
 
 ## 检测能力
 
@@ -109,6 +116,16 @@ pip install -r requirements.txt
 ```bash
 pip install -r requirements-full.txt
 ```
+
+如果你使用 `pyproject.toml` 管理环境，也可以安装开发依赖：
+
+```bash
+pip install -e .[dev]
+```
+
+当前推荐的 Python 版本为 `3.12`。
+
+在 Windows 环境中，`pyzbar` 依赖底层 `zbar`。如果本机暂时没有可用的 `zbar`，可以先使用 `--no-pyzbar` 跑通 OpenCV 检测链路。
 
 ## 推荐运行方式
 
@@ -176,6 +193,8 @@ python app.py qrcodes/detection --no-pyzbar
   - 总体统计指标
 - `outputs/runtime_outputs/summary_report.md`
   - 面向阅读的 Markdown 汇总报告
+- `outputs/runtime_outputs/summary_report.html`
+  - 单文件 HTML 汇总报告
 - `outputs/runtime_outputs/run_meta.json`
   - 单次运行的时间、命令、输入摘要等元数据
 - `outputs/runtime_outputs/diagnostics.json`
@@ -207,3 +226,11 @@ python app.py qrcodes/detection --no-pyzbar
 
 - 根目录这套代码已经是整合后的主版本，后续建议继续只维护根目录实现
 - `outputs/` 是本地运行时生成的结果目录，默认已加入 `.gitignore`
+
+## 最小测试
+
+当前仓库附带了一组不依赖 `cv2` / `pyzbar` 的最小报告层测试，可用于快速确认汇总与对比逻辑正常：
+
+```bash
+python -m unittest discover -s tests
+```
